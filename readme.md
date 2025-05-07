@@ -1,6 +1,6 @@
-# Multiview Object Detection
+# Multiview Object Recognition
 
-Multiview Object Detection is a project aimed at detecting objects from multiple viewpoints using advanced computer vision techniques. This repository contains the codebase, datasets, and documentation to help you get started.
+Multiview Object Recognition is a project aimed at detecting objects from multiple viewpoints using advanced computer vision techniques. This repository contains the codebase, datasets, and documentation to help you get started.
 
 ## Features
 
