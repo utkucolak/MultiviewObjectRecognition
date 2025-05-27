@@ -1,75 +1,91 @@
 # Multiview Object Recognition
 
-Multiview Object Recognition is a project aimed at detecting objects from multiple viewpoints using advanced computer vision techniques. This repository contains the codebase, datasets, and documentation to help you get started.
+This project implements multiview object recognition using handcrafted feature detection and description methods inspired by SIFT and SURF. It matches a query image to one of many views across multiple object folders (e.g., COIL-100 format) using Harris keypoints, histogram-based descriptors, and a ratio-test matcher — all without OpenCV modules.
 
-## Features
+---
 
-- **Multiview Support**: Detect objects from multiple camera angles.
-- **Customizable Models**: Easily integrate and train custom detection models.
-- **Scalable Architecture**: Designed to handle large datasets and complex scenarios.
+## ✨ Features
 
-## Installation
+- 🔍 **Custom Keypoint Detection** using Harris corner response
+- 📐 **SIFT-like Descriptor** using orientation histograms over local patches
+- 🤝 **Ratio-based Feature Matching** for robust correspondence
+- ⚡ **Parallel Processing** for scalable multiview comparisons
+- 📷 **COIL-100-style Dataset** support
 
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/yourusername/MultiviewObjectDetection.git
-    cd MultiviewObjectDetection
-    ```
+---
 
-2. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-3. Set up the environment:
-    - Ensure you have Python 3.8+ installed.
-    - Configure any additional environment variables as needed.
-
-## Usage
-
-1. Prepare your dataset:
-    - Place your images and annotations in the `data/` directory.
-    - Follow the format specified in the [Dataset Guidelines](docs/dataset_guidelines.md).
-
-2. Train the model:
-    ```bash
-    python train.py --config configs/train_config.yaml
-    ```
-
-3. Run inference:
-    ```bash
-    python infer.py --input data/test_images/ --output results/
-    ```
-
-## Project Structure
+## 📁 Folder Structure
 
 ```
-MultiviewObjectDetection/
-├── dataset/               # Dataset directory
-├── utils/                 # Utility scripts
-├── features/              # Project Features
-├── docs/                  # Documentation
-├── main.py                # Main script
-└── README.md              # Project README
+MultiviewObjectRecognition/
+├── coil-100/              # (ignored) Full COIL-100 dataset
+├── dataset/               # (ignored) Subset used for testing
+├── features/              # Detector, Descriptor, Matcher modules
+├── utils/                 # I/O utilities for visualizing matches
+├── main.py                # Main matching pipeline
+├── matches_result.png     # Last matching result saved image
+├── requirements.txt       # Python dependencies
+└── readme.md              # Project README
 ```
 
-## Contributing
+> ⚠️ Note: `dataset/` and `coil-100/` are ignored via `.gitignore`.
 
-Contributions are welcome! Please follow these steps:
+---
 
-1. Fork the repository.
-2. Create a new branch for your feature or bugfix.
-3. Submit a pull request with a detailed description.
+## 🛠️ Installation
 
-## License
+```bash
+git clone https://github.com/yourusername/MultiviewObjectRecognition.git
+cd MultiviewObjectRecognition
+pip install -r requirements.txt
+```
 
-This project is licensed under the [MIT License](LICENSE).
+> Requires Python 3.8+ and OpenCV + NumPy + tqdm
 
-## Acknowledgments
+---
 
-- Thanks to the open-source community for providing tools and resources.
-- Special thanks to contributors and collaborators.
+## 🚀 Usage
 
-## Contact
+By default, `main.py` matches `dataset/obj_20/60.png` against all views of the first 20 objects:
 
-For questions or feedback, please reach out to [colakme19@itu.edu.tr].
+```bash
+python main.py
+```
+
+- Outputs `[DONE]` logs and `[RESULT] Best match` summary
+- Saves the visualization as `matches_result.png`
+
+You can change:
+- `QUERY_IMG_PATH` in `main.py` to test a different query
+- `MAX_OBJECTS` or `MAX_VIEWS_PER_OBJECT` to scale up
+
+---
+
+## 📊 Output Example
+
+If match is successful, `matches_result.png` will show feature correspondences between query and best-matching view.
+
+---
+
+## ✅ How it Works
+
+1. Detects Harris corners in query and dataset images
+2. Computes SIFT-like descriptors over \( 8 	imes 8 \) patches (4×4 cells, 8-bin histograms)
+3. Matches descriptors using Lowe's ratio test
+4. Picks the view with the highest number of good matches
+
+---
+
+## 🤝 Contributing
+
+If you'd like to help improve the project, feel free to fork and PR! Suggestions welcome for:
+- Rotation-invariant descriptors
+- Affine normalization
+- ANN-based matchers
+
+---
+
+## 📬 Contact
+
+Created by **Mehmet Utku Çolak**  
+📧 colakme19@itu.edu.tr

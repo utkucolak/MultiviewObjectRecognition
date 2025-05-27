@@ -7,7 +7,7 @@ class Descriptor():
         self.keypoints = keypoints
         self.image = image
         self.descriptors = []
-    def compute_descriptors(self, patch_size=16):
+    def compute_descriptors(self, patch_size=8):
         half = patch_size // 2
         Ix, Iy = Gradients().compute_gradients(self.image)
 

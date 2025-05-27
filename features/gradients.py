@@ -26,7 +26,8 @@ class Gradients():
             Iy: Gradient in y direction
         """
         if len(image.shape) == 3:
-            raise ValueError("Image should be grayscale.")
+            import cv2
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
         Ix = convolve2d(image, self.P_x, mode="same", boundary="symm")
         Iy = convolve2d(image, self.P_y, mode="same", boundary="symm")

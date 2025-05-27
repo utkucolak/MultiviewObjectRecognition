@@ -2,14 +2,11 @@ import os
 import shutil
 import re
 
-# Source folder containing all COIL-100 images
 SOURCE_DIR = "coil-100"
 TARGET_DIR = "dataset"
 
-# Regular expression to match files like obj1__0.png
 pattern = re.compile(r"obj(\d+)__?(\d+)\.png")
 
-# Make sure output root exists
 os.makedirs(TARGET_DIR, exist_ok=True)
 
 for filename in os.listdir(SOURCE_DIR):
@@ -29,3 +26,5 @@ for filename in os.listdir(SOURCE_DIR):
         print(f"Copied {filename} → obj_{obj_id}/{new_filename}")
     else:
         print(f"Skipped unrecognized file: {filename}")
+
+        
